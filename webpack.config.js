@@ -29,19 +29,17 @@ module.exports = {
 				{
 					test: /\.css$/,
 					use:  ExtractTextPlugin.extract({
-          use: [{
-            loader: 'css-loader',
-            options: { importLoaders: 1 },
-          	}],
-        	}),
+	          use: [{
+	            loader: 'css-loader',
+	            options: { importLoaders: 1 },
+	          	}],
+	        	}),
 				},
 				{
         	test: /\.(sass|scss)$/,
-        	use: [
-          'style-loader',
-          'css-loader',
-          'sass-loader',
-        	]
+
+					loader: ExtractTextPlugin.extract(['css-loader', 'sass-loader'])
+
       	},
 			],
 	},
@@ -51,5 +49,6 @@ module.exports = {
       filename: '[name].bundle.css',
       allChunks: true,
     }),
+    new webpack.optimize.ModuleConcatenationPlugin(),
   ],
 };
